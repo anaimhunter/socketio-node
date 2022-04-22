@@ -13,4 +13,8 @@ export class AppComponent {
   ngOnInit() {
     this.socketService.setupSocketConnection();
   }
+
+  ngOnDestroy() {
+    this.socketService.disconnect();
+  }
 }

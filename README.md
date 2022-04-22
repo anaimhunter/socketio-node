@@ -172,3 +172,27 @@ Write a socket init function on `socketio.service.ts`
     }
 ```
 
+## Disconnection
+
+In your `socketio.service.js` file add this method for disconnection
+
+```sh
+    disconnect() {
+        if (this.socket) {
+            this.socket.disconnect();
+        }
+    }
+```
+We will use the ngOnDestroy hook of Angular. Call the method on `app.component.ts` 
+
+```sh
+    ngOnDestroy() {
+        this.socketService.disconnect();
+    }
+```
+
+When you disconnect the socket or close the webpage, you can see `user disconnected` message on console.
+
+
+
+

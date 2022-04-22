@@ -14,4 +14,10 @@ export class SocketioService {
   setupSocketConnection() {
     this.socket = io(environment.SOCKET_ENDPOINT);
   }
+  
+  disconnect() {
+    if (this.socket) {
+        this.socket.disconnect();
+    }
+}
 }
