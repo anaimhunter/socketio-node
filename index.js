@@ -11,6 +11,7 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+  let token = socket.handshake.auth.token;
   console.log('a user connected');
   socket.on('disconnect', () => {
     console.log('user disconnected');

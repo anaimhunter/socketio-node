@@ -244,3 +244,27 @@ Let’s add an listener for `my broadcast` event on `socketio.service.ts` file .
     });
 ```
 
+## Athentication
+
+You can also send `query parameters` to the Backend when connecting to the socket by using `options` with url in a connection. Add the following `auth token` on the `socketio.service.ts`. 
+
+```sh
+    this.socket = io(environment.SOCKET_ENDPOINT, {
+        auth: {
+            token: 'cde'
+        }
+    });
+```
+
+To `fetch` this information on the Backend on `index.js` file, we have to do it like this  :
+
+```sh
+    io.on('connection', (socket) => {
+        let token = socket.handshake.auth.token;
+        ...
+    });
+```
+
+This would return the value `cde` passed by Frontend.
+
+
