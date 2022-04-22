@@ -86,3 +86,89 @@ Then I listen on the `connection` and `disconnection` events for incoming socket
 
 Our Backend is good to go for now, we will come back to our `node` code when we will implement more events further on.
 
+## Creating an Angular app
+
+If you already have an App skip the following code:
+
+```sh
+    npm install -g @angular/cli
+    ng new socketio-angular
+```
+
+Add socket.io `dependency`
+
+```sh
+    cd socketio-angular
+    npm install socket.io-client
+```
+
+## Creating a socket client service
+
+Now let’s start by creating a `service` to handle socket.io connection. I would create a root level `singleton` service named `socketio.service.ts` and include that in `AppModule` . You can create the service according to your project structure.
+You can create the service by running the following command.
+
+```sh
+    ng g s socketio
+```
+
+Go into the `socketio.service.ts` file and import the following:
+
+```sh
+    import { io } from 'socket.io-client';
+```
+
+Add the socket endpoint that we would connect the socket to inside `environment.ts` file.
+
+```sh
+    export const environment = {  
+	production: false,  
+	SOCKET_ENDPOINT: 'http://localhost:3000'
+};
+```
+
+To connect to our socket and create a socket conection, add `SocketioService` into our `AppModule` and inject the service into our `app.component.ts` . Let’s add the service into our providers first. In `app.module.ts` do this:
+
+```sh
+    @NgModule({
+    declarations: [AppComponent],
+
+    imports: [BrowserModule],
+
+    providers: [SocketioService],
+
+    bootstrap: [AppComponent]
+})
+
+export class AppModule { }
+```
+
+Write a socket init function on `socketio.service.ts`
+
+```sh
+    export class SocketioService {
+
+        socket;
+
+        constructor() {   }
+
+        setupSocketConnection() {
+            this.socket = io(environment.SOCKET_ENDPOINT);
+    }
+}
+```
+
+ Call this method from `app.component.ts` inside ngOnInit.
+
+```sh
+    export class AppComponent implements OnInit {
+    
+        title = 'socketio-angular';
+        
+        constructor(private socketService: SocketioService) {}
+        
+        ngOnInit() {
+            this.socketService.setupSocketConnection();
+        }
+    }
+```
+
