@@ -222,3 +222,25 @@ Emit the same event from Angular code. Edit the file `socketio.service.ts`
     
     }
 ```
+
+## Broadcasting Event 
+
+Emit an event from the `server side`. We will broadcast the event to all connected users. We will broadcast the same message that we received from client and prepend a server string to it. Edit the `index.js` file. 
+
+```sh
+    io.on('connection', (socket) => {
+        ...
+        socket.on('my message', (msg) => {
+            io.emit('my broadcast', `server: ${msg}`);
+        });
+});
+```
+
+Let’s add an listener for `my broadcast` event on `socketio.service.ts` file . 
+
+```sh
+    this.socket.on('my broadcast', (data: string) => {
+    console.log(data);
+    });
+```
+
