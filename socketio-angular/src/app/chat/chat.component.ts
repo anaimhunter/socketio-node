@@ -13,6 +13,8 @@ export class ChatComponent {
   messageList: string[] = [];
   secretCode!: string;
 
+  userName!: string;
+
   constructor(private chatService: ChatService){
     this.secretCode = 'DONT TELL';
   }
@@ -33,6 +35,10 @@ export class ChatComponent {
   sendMessage() {
     this.chatService.sendMessage(this.newMessage);
     this.newMessage = '';
+  }
+
+  sendUser() {
+    this.chatService.sendUser(this.userName);
   }
 
 }

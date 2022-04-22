@@ -7,6 +7,7 @@ const io = require('socket.io')(http, {
 });
 const port = process.env.PORT || 3000;
 
+user=''
 app.get('/', (req, res) => {
   res.send('<h1>Hey Socket.io</h1>');
 });
@@ -17,14 +18,20 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-  socket.on('my message', (msg) => {
-    console.log('message: ' + msg);
-    io.emit('my broadcast', `server: ${msg}`);
+  socket.on('user', (user) => {
+    console.log('user: ' + user);
+    socket.on('message', (message) => {
+      console.log(message);
+      if(user!='')
+      {
+        io.emit('message', `${user} ----> ${message}`);
+      }
+      else{
+        io.emit('message', `${socket.id.substr(0, 2)} ----> ${message}`);
+      } 
+    });
   });
-  socket.on('message', (message) => {
-    console.log(message);
-    io.emit('message', `${socket.id.substr(0, 2)} said ${message}`);
-  });
+  
 });
   
 http.listen(3000, () => {

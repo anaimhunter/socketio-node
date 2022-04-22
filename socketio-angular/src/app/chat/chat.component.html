@@ -1,3 +1,9 @@
+<input [(ngModel)]="userName" (keyup)="$event.keyCode == 13 && sendUser()" />
+<button (click)="sendUser()">Add Your Name</button>
+<br>
+<br>
+<br>
+
 <div *ngFor="let message of messageList">
     <li>
         {{message}}

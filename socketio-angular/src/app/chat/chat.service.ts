@@ -10,13 +10,14 @@ export class ChatService {
 
 
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
+
   constructor() {}
 
   socket = io(environment.SOCKET_ENDPOINT);
   
   public sendMessage(message: string) {
     
-    this.socket.emit('message', message);
+    this.socket.emit('message', message,);
   }
 
   public getNewMessage = () => {
@@ -26,4 +27,10 @@ export class ChatService {
     
     return this.message$.asObservable();
   };
+
+  public sendUser(user: string) {
+    
+    this.socket.emit('user', user);
+  }
+
 }
