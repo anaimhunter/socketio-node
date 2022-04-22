@@ -27,16 +27,16 @@ npm install express
 Create an `index.js` file that will setup our application.
 
 ```sh
-    const app = require('express')();
-    const http = require('http').createServer(app);
+   const app = require('express')();
+   const http = require('http').createServer(app);
 
-    app.get('/', (req, res) => {
-    res.send('<h1>Hey Socket.io</h1>');
-    });
+   app.get('/', (req, res) => {
+   	res.send('<h1>Hey Socket.io</h1>');
+   });
 
-    http.listen(3000, () => {
-    console.log('listeninghttp on *:3000');
-    });
+   http.listen(3000, () => {
+    	console.log('listeninghttp on *:3000');
+   });
 ```
 
 This code is explained in the following steps:
@@ -57,27 +57,27 @@ npm install socket.io
 Edit the  `index.js` file.
 
 ```sh
-    const app = require('express')();
-    const http = require('http').createServer(app);
-    const io = require('socket.io')(http, {
-    cors: {
-        origins: ['http://localhost:4200']
-    }
-    });
+   const app = require('express')();
+   const http = require('http').createServer(app);
+   const io = require('socket.io')(http, {
+	   cors: {
+		origins: ['http://localhost:4200']
+	   }
+   });
 
     app.get('/', (req, res) => {
-    res.send('<h1>Hey Socket.io</h1>');
+    	res.send('<h1>Hey Socket.io</h1>');
     });
 
     io.on('connection', (socket) => {
-    console.log('a user connected');
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
+	    console.log('a user connected');
+	    socket.on('disconnect', () => {
+		console.log('user disconnected');
+	    });
     });
 
     http.listen(3000, () => {
-    console.log('listening on *:3000');
+    	console.log('listening on *:3000');
     });
 ```
 
@@ -198,7 +198,7 @@ When you disconnect the socket or close the webpage, you can see `user disconnec
 Let’s register an event called `my message` inside our `index.js` in nodeJS project file and console the data and we will emit the same event from Angular app.
 
 ```sh
-    io.on('connection', (socket) => {
+   io.on('connection', (socket) => {
   
         console.log('a user connected');
         
@@ -214,7 +214,7 @@ Let’s register an event called `my message` inside our `index.js` in nodeJS pr
 Emit the same event from Angular code. Edit the file `socketio.service.ts` 
 
 ```sh
-    setupSocketConnection() {  
+   setupSocketConnection() {  
 
         this.socket = io(environment.SOCKET_ENDPOINT);  
         
@@ -228,8 +228,8 @@ Emit the same event from Angular code. Edit the file `socketio.service.ts`
 Emit an event from the `server side`. We will broadcast the event to all connected users. We will broadcast the same message that we received from client and prepend a server string to it. Edit the `index.js` file. 
 
 ```sh
-    io.on('connection', (socket) => {
-        ...
+   io.on('connection', (socket) => {
+   	...
         socket.on('my message', (msg) => {
             io.emit('my broadcast', `server: ${msg}`);
         });
@@ -259,10 +259,10 @@ You can also send `query parameters` to the Backend when connecting to the socke
 To `fetch` this information on the Backend on `index.js` file, we have to do it like this  :
 
 ```sh
-    io.on('connection', (socket) => {
+   io.on('connection', (socket) => {
         let token = socket.handshake.auth.token;
         ...
-    });
+   });
 ```
 
 This would return the value `cde` passed by Frontend.
