@@ -11,8 +11,11 @@ export class SocketioService {
 
   constructor() {   }
 
-  setupSocketConnection() {
-    this.socket = io(environment.SOCKET_ENDPOINT);
+  setupSocketConnection() {  
+
+    this.socket = io(environment.SOCKET_ENDPOINT);  
+    
+    this.socket.emit('my message', 'Hello there from Angular.');  
   }
   
   disconnect() {

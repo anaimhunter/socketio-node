@@ -193,6 +193,32 @@ We will use the ngOnDestroy hook of Angular. Call the method on `app.component.t
 
 When you disconnect the socket or close the webpage, you can see `user disconnected` message on console.
 
+## Event Handling
 
+Let’s register an event called `my message` inside our `index.js` in nodeJS project file and console the data and we will emit the same event from Angular app.
 
+```sh
+    io.on('connection', (socket) => {
+  
+        console.log('a user connected');
+        
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+        });
+        
+        socket.on('my message', (msg) => {
+            console.log('message: ' + msg);
+        });
+    });
+```
+Emit the same event from Angular code. Edit the file `socketio.service.ts` 
 
+```sh
+    setupSocketConnection() {  
+
+        this.socket = io(environment.SOCKET_ENDPOINT);  
+        
+        this.socket.emit('my message', 'Hello there from Angular.');
+    
+    }
+```
